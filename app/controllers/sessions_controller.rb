@@ -5,7 +5,7 @@ class SessionsController < ApplicationController
         if user&.authenticate(params[:password])
             session[:user_id] = user.id
             render json: {
-                user. UserSerializer.new(user).serializable_hash,
+                user: UserSerializer.new(user).serializable_hash,
                 logged_in: true,
                 message: "You're logged in",
                 status: :created
