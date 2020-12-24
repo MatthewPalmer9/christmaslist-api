@@ -1,3 +1,35 @@
 class ApplicationController < ActionController::API
-    # skip_before_action :verify_authenticity_token
+    before_action :authorized
+
+    def issue_token(user)
+        JWT.encode({ user_id: user.id}, Rails.application.secret_ket_base, 'HS256')
+    end 
+
+    def token 
+        request.headers['Authorization']
+    end 
+
+    def current_user
+        @user ||= User.find_by(id: user_id)
+    end 
+
+    def user_id
+        decoded_token.first['user_id']
+    end 
+
+    def decoded_token
+        begin
+            JWT.decode(token, Rails.application.secret_ket_base, true, { :algorithm => 'HS256'})
+        rescue JWT::DecodeError
+            [{error: "Invalid Token"}]
+        end
+    end 
+
+    def logged_in?
+        !!current_user
+    end 
+
+    def authorized
+        render json: { message: 'Please log in' }, status: :unauthorized unless logged_in?
+    end 
 end

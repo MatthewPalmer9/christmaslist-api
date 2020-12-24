@@ -1,20 +1,13 @@
-class UsersController < ApplicationController
+class Api::V1::UsersController < ApplicationController
     
-    def signup
+    def create
         # Handles signing user up
-        user = User.new(user_params)
-        if user.save
-            session[:user_id] = user.id
-            render json: {
-                user: UserSerializer.new(user).serializable_hash,
-                logged_in: true,
-                status: :created
-            }
+        user = User.create(user_params)
+        if user.valid?
+            @token = issue_token(user)
+            render json: { user: UserSerializer.new(user), jwt: @token }, status: :created 
         else 
-            render json: {
-                status: 401,
-                message: "Something went wrong."
-            }
+            render json: { error: user.errors.full_messages }, status: :not_acceptable
         end 
     end 
 
