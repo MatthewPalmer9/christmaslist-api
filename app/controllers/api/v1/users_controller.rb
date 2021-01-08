@@ -1,7 +1,7 @@
 class Api::V1::UsersController < ApplicationController
     
+    # Handles CREATING a user
     def create
-        # Handles signing user up
         user = User.create(user_params)
         if user.valid?
             @token = issue_token(user)

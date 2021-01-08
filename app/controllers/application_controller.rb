@@ -2,7 +2,7 @@ class ApplicationController < ActionController::API
     before_action :authorized
 
     def issue_token(user)
-        JWT.encode({ user_id: user.id}, Rails.application.secret_ket_base, 'HS256')
+        JWT.encode({ user_id: user.id}, Rails.application.secret_key_base, 'HS256')
     end 
 
     def token 
@@ -19,7 +19,7 @@ class ApplicationController < ActionController::API
 
     def decoded_token
         begin
-            JWT.decode(token, Rails.application.secret_ket_base, true, { :algorithm => 'HS256'})
+            JWT.decode(token, Rails.application.secret_key_base, true, { :algorithm => 'HS256'})
         rescue JWT::DecodeError
             [{error: "Invalid Token"}]
         end
