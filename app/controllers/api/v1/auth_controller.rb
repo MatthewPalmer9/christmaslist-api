@@ -3,7 +3,7 @@ class Api::V1::AuthController < ApplicationController
 
     # HANDLES CREATING SECURE USER LOGIN/SESSION
     def create
-        user = USer.find_by(username: user_login_params[:username])
+        user = User.find_by(email: user_login_params[:email])
         if user&.authenticate(user_login_params[:password])
             @token = issue_token(user)
             render json: { user: UserSerializer.new(user), jwt: @token }
@@ -21,7 +21,9 @@ class Api::V1::AuthController < ApplicationController
         end 
     end 
 
+    private 
+    
     def user_login_params
-        params.require(:user).permit(:username, :password)
+        params.require(:user).permit(:email, :password)
     end 
 end 
