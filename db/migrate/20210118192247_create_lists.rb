@@ -3,7 +3,6 @@ class CreateLists < ActiveRecord::Migration[6.0]
     create_table :lists do |t|
       t.string :name
       t.integer :user_id
-      t.integer :listitem_id
 
       t.timestamps
     end 

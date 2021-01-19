@@ -24,7 +24,6 @@ ActiveRecord::Schema.define(version: 2021_01_18_212408) do
   create_table "lists", force: :cascade do |t|
     t.string "name"
     t.integer "user_id"
-    t.integer "listitem_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

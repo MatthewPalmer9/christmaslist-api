@@ -7,5 +7,5 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 User.create(email: 'matthewpalmer9@outlook.com', username: 'matthewpalmer9', password: '44183Ad5!!', list_id: 1)
-List.create(name: 'Matts List', user_id: 1, listitem_id: 1)
+List.create(name: 'Matts List', user_id: 1)
 Listitem.create(description: 'example', url: 'https://example.com', list_id: 1, user_id: 1)
