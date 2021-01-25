@@ -6,6 +6,9 @@ class Api::V1::UsersController < ApplicationController
         user = User.create(user_params)
         if user.valid?
             @token = issue_token(user)
+            list = List.create(name: user.username)
+            list.user_id = user.id
+            list.save
             render json: { user: UserSerializer.new(user), jwt: @token }, status: :created 
         else 
             render json: { error: user.errors.full_messages }, status: :not_acceptable
