@@ -10,6 +10,15 @@ class Api::V1::ListitemsController < ApplicationController
         listitem.save
     end 
 
+    def show
+        # user = User.find_by(id: user_id)
+        # listitem = Listitem.find_by(id: )
+        if params[:id]
+            item = Listitem.find_by(id: params[:id])
+            render json: {listitem: item}
+        end 
+    end
+
     def destroy
         if params[:id]
             item = Listitem.find_by(id: params[:id])
