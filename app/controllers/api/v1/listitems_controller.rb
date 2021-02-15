@@ -15,8 +15,21 @@ class Api::V1::ListitemsController < ApplicationController
         # listitem = Listitem.find_by(id: )
         if params[:id]
             item = Listitem.find_by(id: params[:id])
-            render json: {listitem: item}
+            if item
+                render json: {listitem: item}
+            else
+                render json: {err: "User does not exist."}
+            end
         end 
+    end
+
+    def update
+        listitem = Listitem.find_by(params["list"]["id"])
+        listitem.update(
+            description: params["list"]["description"], 
+            url: params["list"]["url"]
+        )
+        render json: {result: listitem}
     end
 
     def destroy
