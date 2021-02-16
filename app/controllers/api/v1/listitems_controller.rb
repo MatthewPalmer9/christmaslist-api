@@ -24,7 +24,7 @@ class Api::V1::ListitemsController < ApplicationController
     end
 
     def update
-        listitem = Listitem.find_by(params["list"]["id"])
+        listitem = Listitem.find(params["list"]["id"])
         listitem.update(
             description: params["list"]["description"], 
             url: params["list"]["url"]
